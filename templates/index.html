@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis Tool</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #1e5799 0%,#2ce0bf 19%,#76dd2c 40%,#dba62b 60%,#e02cbf 83%,#1e5799 100%); 
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        /* Intro Section */
+        .intro {
+            text-align: center;
+            position: relative;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .intro h1 {
+            font-size: 4rem;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: textGlow 1.5s infinite alternate;
+        }
+
+        .intro button {
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            animation: buttonIntroAnimation 1s ease-in-out;
+        }
+        
+        @keyframes buttonIntroAnimation {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .intro button:hover {
+            background-color: #0056b3;
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+        }
+        
+
+        /* Container Styles */
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            text-align: center;
+            display: none; /* Initially hidden */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease-out forwards;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
+            border-color: #0056b3;
+            outline: none;
+        }
+
+        button {
+            display: inline-block;
+            width: 100%;
+            padding: 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f1f1f1;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: left;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .result p {
+            margin: 10px 0;
+            font-size: 1.1rem;
+        }
+
+        .result strong {
+            color: #007bff;
+        }
+
+        /* Footer Styles */
+        footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            color: #fff;
+        }
+
+        .social-footer {
+            display: flex;
+            gap: 20px;
+        }
+
+        footer a {
+            color: #fff;
+            font-size: 2rem;
+            text-decoration: none;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        footer a:hover {
+            color: #007bff;
+            transform: scale(1.1);
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="intro">
+        <h1>Sentiment Analysis Tool</h1>
+        <button onclick="showContent()">Get Started</button>
+    </div>
+
+    <div class="container">
+        <h1>Sentiment Analysis Tool</h1>
+        <textarea id="textInput" placeholder="Enter text here..."></textarea>
+        <button onclick="analyzeSentiment()">Analyze Sentiment</button>
+        <div class="result" id="result">
+            <p><strong>Overall Sentiment:</strong> <span id="overallSentiment"></span></p>
+            <p><strong>Sentiment Scores:</strong> <span id="sentimentScores"></span></p>
+            <p><strong>Positive Words:</strong> <span id="positiveWords"></span></p>
+            <p><strong>Negative Words:</strong> <span id="negativeWords"></span></p>
+            <p><strong>Neutral Words:</strong> <span id="neutralWords"></span></p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="social-footer">
+            <a href="https://www.linkedin.com/in/sravani-samayam " target="_blank" aria-label="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://github.com/monster-09" target="_blank" aria-label="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        function showContent() {
+            document.querySelector('.intro').style.opacity = '0';
+            document.querySelector('.intro').style.transform = 'translateY(-20px)';
+            setTimeout(() => {
+                document.querySelector('.intro').style.display = 'none';
+                document.querySelector('.container').style.display = 'block';
+                document.querySelector('.container').style.opacity = '1';
+                document.querySelector('.container').style.transform = 'translateY(0)';
+            }, 500); // Delay to match the fade-out duration
+        }
+
+        async function analyzeSentiment() {
+            const text = document.getElementById('textInput').value;
+            const response = await fetch('/analyze', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text })
+            });
+            const result = await response.json();
+
+            document.getElementById('overallSentiment').textContent = result['Overall Sentiment'] || 'Error';
+            document.getElementById('sentimentScores').textContent = JSON.stringify(result['Sentiment Scores']) || 'Error';
+
+            // Update words display
+            document.getElementById('positiveWords').textContent = result['Positive Words'].join(', ') || 'None';
+            document.getElementById('negativeWords').textContent = result['Negative Words'].join(', ') || 'None';
+            document.getElementById('neutralWords').textContent = result['Neutral Words'].join(', ') || 'None';
+        }
+    </script>
+</body>
+</html>
