@@ -1,16 +1,23 @@
 # Sentiment-Analysis-Python-Flask
 
-This is a simple sentiment analysis web application built using Flask. The application uses the VADER (Valence Aware Dictionary and sEntiment Reasoner) sentiment analysis tool from the NLTK library to analyze the sentiment of a given text. The application can classify the sentiment of the input text as Positive, Negative, or Neutral and provides sentiment scores along with the list of words contributing to each sentiment.
+Sentiment Analysis Tool is a web application designed to analyze and visualize the sentiment of text input using the VADER (Valence Aware Dictionary and sEntiment Reasoner) sentiment analysis model. This application provides a user-friendly interface to input text and receive detailed sentiment analysis results.
 
-Demo
+--Key Features--
+
+-> Sentiment Classification: Determines the overall sentiment of the input text as Positive, Negative, or Neutral based on the VADER sentiment scores.
+-> Sentiment Scores: Provides a breakdown of sentiment scores, including positive, negative, neutral, and compound scores.
+-> Word Analysis: Identifies and categorizes individual words in the text into positive, negative, or neutral based on their sentiment scores.
+-> Responsive Design: The application features a modern, animated design with a gradient background and smooth transitions to enhance user experience.
+
+--Demo--
 You can access a live demo of the application here.
+Link: https://sentiment-analysis-python-flask.onrender.com
 
-Features
--> Analyze text to determine the overall sentiment (Positive, Negative, Neutral).
--> View sentiment scores.
--> Identify words contributing to each sentiment category (Positive, Negative, Neutral).
+--Deployment--
 
-Installation
+The application is deployed on Render, a cloud-based platform that provides a simple way to deploy web applications. Render handles the hosting, scaling, and management of the application, making it accessible from anywhere with an internet connection.
+
+--Installation--
 1. Open VS Code: Launch Visual Studio Code.
 2. Open the Sentiment-Analysis-Python-Flask Folder in VS code
 3. Open a Terminal in VS Code
